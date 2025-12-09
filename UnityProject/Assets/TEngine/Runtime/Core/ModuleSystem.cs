@@ -201,7 +201,7 @@ namespace TEngine
             _updateExecuteList.Clear();
             foreach (var updateModule in _updateModules)
             {
-                _updateExecuteList.Add(updateModule as IUpdateModule);
+                if (updateModule is IUpdateModule) _updateExecuteList.Add(updateModule as IUpdateModule);
             }
         }
     }
