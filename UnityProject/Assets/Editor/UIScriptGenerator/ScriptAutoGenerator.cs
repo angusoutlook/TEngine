@@ -568,6 +568,11 @@ namespace TEngine.Editor.UI
             if (rule.componentName == UIComponentName.GameObject)
             {
                 var c = child.gameObject.GetComponent<RectTransform>();
+                if (c == null)
+                {
+                    Debug.LogWarning($"对象 '{child.name}' 未找到 RectTransform 组件，已跳过绑定。");
+                    return;
+                }
                 uiBindComponent.AddComponent(c);
                 return;
             }
@@ -593,6 +598,11 @@ namespace TEngine.Editor.UI
             }
 
             var com = child.GetComponent(componentType);
+            if (com == null)
+            {
+                Debug.LogWarning($"对象 '{child.name}' 未找到组件类型 '{componentName}'，已跳过绑定。请检查该对象是否正确添加了对应的组件。");
+                return;
+            }
             uiBindComponent.AddComponent(com);
         }
 

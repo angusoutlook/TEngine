@@ -14,6 +14,10 @@ namespace GameLogic
 
         public void AddComponent(Component component)
         {
+            if (component == null)
+            {
+                return;
+            }
             if (m_components != null && !m_components.Contains(component))
             {
                 m_components.Add(component);
