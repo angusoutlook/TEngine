@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using TEngine;
@@ -74,6 +74,15 @@ public class BattleSystem : Singleton<BattleSystem>
 
         // 显示战斗界面
         GameModule.UI.ShowUIAsync<UIBattleWindow>();
+
+        // 创建 UILogin 窗口（如果不存在）并立即隐藏
+        var v1 = await GameModule.UI.ShowUIAsyncAwait<UILogin>();
+        if (v1 != null)
+        {
+            v1.Visible = false;
+            GameModule.UI.HideUI<UILogin>();
+        }
+
 
         // 监听游戏事件
         GameEvent.AddEventListener<Vector3, Quaternion>(ActorEventDefine.PlayerDead, OnPlayerDead);

@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TEngine;
@@ -59,6 +59,9 @@ namespace GameLogic
             // // 释放资源
             // var package = YooAssets.GetPackage("DefaultPackage");
             // package.UnloadUnusedAssets();
+            //GameModule.UI.ShowUIAsync<UILogin>();
+            var target = GameEvent.Get<ILoginUI>();
+            target.ShowLoginUI();
         }
 
         #endregion

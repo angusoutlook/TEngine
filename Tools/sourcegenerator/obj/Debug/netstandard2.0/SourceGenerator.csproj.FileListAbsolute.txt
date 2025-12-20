@@ -1,0 +1,9 @@
+D:\workspace\unity\TEngine\Tools\sourcegenerator\obj\Debug\netstandard2.0\SourceGenerator.csproj.AssemblyReference.cache
+D:\workspace\unity\TEngine\Tools\sourcegenerator\obj\Debug\netstandard2.0\SourceGenerator.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\unity\TEngine\Tools\sourcegenerator\obj\Debug\netstandard2.0\SourceGenerator.csproj.CoreCompileInputs.cache
+D:\workspace\unity\TEngine\Tools\sourcegenerator\obj\Debug\netstandard2.0\SourceGenerator.sourcelink.json
+D:\workspace\unity\TEngine\Tools\sourcegenerator\bin\Debug\netstandard2.0\SourceGenerator.deps.json
+D:\workspace\unity\TEngine\Tools\sourcegenerator\bin\Debug\netstandard2.0\SourceGenerator.dll
+D:\workspace\unity\TEngine\Tools\sourcegenerator\bin\Debug\netstandard2.0\SourceGenerator.pdb
+D:\workspace\unity\TEngine\Tools\sourcegenerator\obj\Debug\netstandard2.0\SourceGenerator.dll
+D:\workspace\unity\TEngine\Tools\sourcegenerator\obj\Debug\netstandard2.0\SourceGenerator.pdb
