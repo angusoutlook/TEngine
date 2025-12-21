@@ -11,14 +11,14 @@ namespace TEngine.Core
         public static long ReadInt64(FileStream stream)
         {
             var buffer = new byte[8];
-            stream.Read(buffer, 0, 8);
+            stream.ReadExactly(buffer, 0, 8);
             return BitConverter.ToInt64(buffer, 0);
         }
 
         public static int ReadInt32(FileStream stream)
         {
             var buffer = new byte[4];
-            stream.Read(buffer, 0, 4);
+            stream.ReadExactly(buffer, 0, 4);
             return BitConverter.ToInt32(buffer, 0);
         }
 

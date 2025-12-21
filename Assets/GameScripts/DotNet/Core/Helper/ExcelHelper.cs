@@ -1,33 +1,33 @@
 #if TENGINE_NET
-using OfficeOpenXml;
+using ClosedXML.Excel;
 
 namespace TEngine.Helper;
 
 public static class ExcelHelper
 {
-    public static ExcelPackage LoadExcel(string name)
+    public static XLWorkbook LoadExcel(string name)
     {
-        return new ExcelPackage(name);
+        return new XLWorkbook(name);
     }
     
-    public static string GetCellValue(this ExcelWorksheet sheet, int row, int column)
+    public static string GetCellValue(this IXLWorksheet sheet, int row, int column)
     {
-        ExcelRange cell = sheet.Cells[row, column];
+        var cell = sheet.Cell(row, column);
             
         try
         {
-            if (cell.Value == null)
+            if (cell.Value.IsBlank)
             {
                 return "";
             }
 
-            string s = cell.GetValue<string>();
+            string s = cell.GetString();
                 
             return s.Trim();
         }
         catch (Exception e)
         {
-            throw new Exception($"Rows {row} Columns {column} Content {cell.Text} {e}");
+            throw new Exception($"Rows {row} Columns {column} Content {cell.Value} {e}");
         }
     }
 }

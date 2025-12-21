@@ -1,4 +1,4 @@
-﻿using TEngine;
+using TEngine;
 using TEngine.Core;
 using TEngine.Logic;
 

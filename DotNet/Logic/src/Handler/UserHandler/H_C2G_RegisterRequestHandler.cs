@@ -37,7 +37,8 @@ namespace TEngine.Logic
             accountInfo.SDKUID = request.SDKUID;
             accountInfo.UID = uid;
 
-            db.Save(accountInfo);
+            // 等待保存完成，确保数据已写入数据库
+            await db.Save(accountInfo);
 
             Log.Debug($"收到注册的消息 request:{request.ToJson()}");
             response.UID = uid;

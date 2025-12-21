@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using TEngine.CustomExport;
 using TEngine.DataStructure;
 using Newtonsoft.Json;
-using OfficeOpenXml;
+using ClosedXML.Excel;
 using TEngine.Helper;
 using static System.String;
 
@@ -22,12 +22,10 @@ public sealed class ExcelExporter
     private readonly HashSet<string> _loadFiles = new HashSet<string> {".xlsx", ".xlsm", ".csv"};
     private readonly OneToManyList<string, ExportInfo> _tables = new OneToManyList<string, ExportInfo>();
     private readonly ConcurrentDictionary<string, ExcelTable> _excelTables = new ConcurrentDictionary<string, ExcelTable>();
-    private readonly ConcurrentDictionary<string, ExcelWorksheet> _worksheets = new ConcurrentDictionary<string, ExcelWorksheet>();
+    private readonly ConcurrentDictionary<string, IXLWorksheet> _worksheets = new ConcurrentDictionary<string, IXLWorksheet>();
 
-    static ExcelExporter()
-    {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-    }
+    // ClosedXML 使用 MIT 许可证，完全免费，包括商业用途
+    // 无需任何许可证设置
     
     public ExcelExporter(ExportType exportType)
     {
@@ -224,7 +222,8 @@ public sealed class ExcelExporter
                         var clientColInfoList = new List<int>();
                         var worksheet = LoadExcel(exportInfo.FileInfo.FullName, true);
 
-                        for (var col = 3; col <= worksheet.Columns.EndColumn; col++)
+                        var lastColumn = worksheet.LastColumnUsed()?.ColumnNumber() ?? 0;
+                        for (var col = 3; col <= lastColumn; col++)
                         {
                             // 列名字第一个字符是#不参与导出
 
@@ -432,7 +431,7 @@ public sealed class ExcelExporter
                     {
                         var fileInfoFullName = tableListName.FileInfo.FullName;
                         var excelWorksheet = LoadExcel(fileInfoFullName, false);
-                        var rows = excelWorksheet.Dimension.Rows;
+                        var rows = excelWorksheet.LastRowUsed()?.RowNumber() ?? 0;
                         excelTable.ServerColInfos.TryGetValue(fileInfoFullName, out var serverCols);
                         excelTable.ClientColInfos.TryGetValue(fileInfoFullName, out var clientCols);
 
@@ -514,7 +513,7 @@ public sealed class ExcelExporter
         Task.WaitAll(exportToBinaryTasks.ToArray());
     }
 
-    private void GenerateBinary(string fileInfoFullName, ExcelWorksheet excelWorksheet, DynamicConfigDataType dynamicInfo, List<int> cols, string id, int row, bool isLast, bool isServer)
+    private void GenerateBinary(string fileInfoFullName, IXLWorksheet excelWorksheet, DynamicConfigDataType dynamicInfo, List<int> cols, string id, int row, bool isLast, bool isServer)
     {
         if (cols == null || IsNullOrEmpty(id) || cols.Count <= 0 || dynamicInfo?.ConfigType == null)
         {
@@ -569,14 +568,14 @@ public sealed class ExcelExporter
         }
     }
 
-    public ExcelWorksheet LoadExcel(string name, bool isAddToDic)
+    public IXLWorksheet LoadExcel(string name, bool isAddToDic)
     {
         if (_worksheets.TryGetValue(name, out var worksheet))
         {
             return worksheet;
         }
 
-        worksheet = ExcelHelper.LoadExcel(name).Workbook.Worksheets[0];
+        worksheet = ExcelHelper.LoadExcel(name).Worksheet(1);
 
         if (isAddToDic)
         {

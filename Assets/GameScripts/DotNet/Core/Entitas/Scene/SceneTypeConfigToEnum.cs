@@ -13,9 +13,10 @@ public sealed class SceneTypeConfigToEnum : ACustomExport
         using var excelPackage = ExcelHelper.LoadExcel(fullPath);
         var sceneType = new Dictionary<string, string>();
         var sceneSubType = new Dictionary<string, string>();
-        var sceneTypeConfig = excelPackage.Workbook.Worksheets["SceneTypeConfig"];
+        var sceneTypeConfig = excelPackage.Worksheet("SceneTypeConfig");
+        var lastRow = sceneTypeConfig.LastRowUsed()?.RowNumber() ?? 0;
 
-        for (var row = 3; row <= sceneTypeConfig.Dimension.Rows; row++)
+        for (var row = 3; row <= lastRow; row++)
         {
             var sceneTypeId = sceneTypeConfig.GetCellValue(row, 1);
             var sceneTypeStr = sceneTypeConfig.GetCellValue(row, 2);
@@ -28,9 +29,10 @@ public sealed class SceneTypeConfigToEnum : ACustomExport
             sceneType.Add(sceneTypeId, sceneTypeStr);
         }
             
-        var sceneSubTypeConfig = excelPackage.Workbook.Worksheets["SceneSubTypeConfig"];
+        var sceneSubTypeConfig = excelPackage.Worksheet("SceneSubTypeConfig");
+        var lastSubRow = sceneSubTypeConfig.LastRowUsed()?.RowNumber() ?? 0;
             
-        for (var row = 3; row <= sceneSubTypeConfig.Dimension.Rows; row++)
+        for (var row = 3; row <= lastSubRow; row++)
         {
             var sceneSubTypeId = sceneSubTypeConfig.GetCellValue(row, 1);
             var sceneSubTypeStr = sceneSubTypeConfig.GetCellValue(row, 2);

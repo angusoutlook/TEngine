@@ -14,7 +14,7 @@ public class CharacterInfoAwakeSystem : AwakeSystem<CharacterInfo>
 public class CharacterInfo : Entity
 {
     //昵称
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
 
     //等级
     public int Level { get; set; }
