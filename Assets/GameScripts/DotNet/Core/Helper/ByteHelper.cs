@@ -8,6 +8,30 @@ namespace TEngine.Core
     {
         private static readonly string[] Suffix = { "Byte", "KB", "MB", "GB", "TB" };
 
+        /// <summary>
+        /// 为 FileStream 做成扩展方法：精确读取指定数量的字节。
+        /// </summary>
+        public static void ReadExactly(this FileStream stream, byte[] buffer, int offset, int count)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            var totalRead = 0;
+            while (totalRead < count)
+            {
+                var read = stream.Read(buffer, offset + totalRead, count - totalRead);
+                if (read == 0)
+                {
+                    // 流提前结束，无法读满指定长度
+                    throw new EndOfStreamException($"Unable to read {count} bytes from the stream.");
+                }
+
+                totalRead += read;
+            }
+        }
+
         public static long ReadInt64(FileStream stream)
         {
             var buffer = new byte[8];
