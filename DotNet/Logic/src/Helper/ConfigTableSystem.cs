@@ -9,7 +9,20 @@ public static class ConfigTableSystem
 {
     public static void Bind()
     {
-        LoadConfigAsync().GetAwaiter().GetResult();
+        // 注意：App.Init() 会把 SynchronizationContext 设置为 ThreadSynchronizationContext.Main。
+        // 如果这里用 GetAwaiter().GetResult() 同步阻塞主线程，而异步链路（包括第三方/生成代码）又捕获了该上下文，
+        // 则 continuation 会回投到“主线程上下文”，但主线程此时被阻塞，最终形成死锁，导致 Program.cs 的 while 永远进不去。
+        // 这里临时清空上下文，确保异步链路在 ThreadPool 上完成，从而避免死锁。
+        var prevContext = SynchronizationContext.Current;
+        try
+        {
+            SynchronizationContext.SetSynchronizationContext(null);
+            LoadConfigAsync().GetAwaiter().GetResult();
+        }
+        finally
+        {
+            SynchronizationContext.SetSynchronizationContext(prevContext);
+        }
         
         // 框架需要一些的配置文件来启动服务器和创建网络服务所以需要ServerConfig.xlsx和MachineConfig.xlsx的配置
         // 由于配置表的代码是生成在框架外面的、框架没办法直接获取到配置文件

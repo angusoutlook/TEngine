@@ -1,2 +1,2 @@
-cd /d %~dp0Bin/App/net7.0
+cd /d %~dp0Bin/App/net9.0
 App.exe --Mode Develop --AppType Export --AppId 1025

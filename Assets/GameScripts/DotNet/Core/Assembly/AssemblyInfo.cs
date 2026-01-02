@@ -10,7 +10,7 @@ namespace TEngine.Core
     {
         public Assembly Assembly { get; private set; }
         public readonly List<Type> AssemblyTypeList = new List<Type>();
-        public readonly OneToManyList<Type, Type> AssemblyTypeGroupList = new OneToManyList<Type, Type>();
+        public readonly OneToManyList<Type, Type> AssemblyTypeGroupList = new OneToManyList<Type, Type>(); // interface
 
         public void Load(Assembly assembly)
         {
