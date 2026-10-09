@@ -81,6 +81,12 @@ crashlytics-build.properties
 .vsconfig
 .vscode
 
+# Local workflow evidence, approvals, and Python caches
+/.codex/runs/
+/.codex/.venv/
+/.codex/**/__pycache__/
+/.codex/**/*.pyc
+
 #Bundles
 Bundles/
 
