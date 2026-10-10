@@ -528,6 +528,5 @@ git merge main --no-ff
 | ~~1~~ | ~~Android 真机验证~~ | ✅ **已完成**（见 §10.1 阶段 5） |
 | ~~2~~ | ~~R12：本地化工具 6.3 实测~~ | ✅ **已关闭**：① 反射所在方法 `EditorTools.TextField` 全仓 0 调用方（死代码路径，影响面为零）；② 活路径 `Tools → I2 Localization → Refresh Localizations` 实测正常（仅 I2 自身 `Handles.Repaint` cosmetic 警告，无 NRE/反射失败） |
 | ~~3~~ | ~~清理构建残留~~ | ✅ **已完成**（`Bundles/`、两平台旧版本已删；各保留最新：Windows 1164 / Android 1274） |
-| ~~6~~ | ~~AI 工具链验证与文档同步~~ | ✅ **已完成**：unity CLI 装入 `UnityProject/Tools/`（按 pipeline 约定不入库，.gitignore 已补）；**`workflow.py doctor` passed**（environment + editor-connection，AI 工具链在 6.3 实测可用）；`.codex` skills 恰为 5 项核对一致；三个 AI references 已同步（architecture.md 补 TEngine.AOT/Fantasy.Unity、hotfix-workflow.md 补程序集边界与实测要点、troubleshooting.md 补两类真机故障） |
 | 4 | 生产化备选 | 本地 python/nx http.server 仅限联调；上线换 Nginx/OSS/CDN（目录结构不变，`{projectName}/{platform}/` 即 CDN 路径约定） |
 | 5 | `GameClient.Send` 陷阱（ISSUE-001/D4） | 维持「暂不修」；业务首次使用 `GameClient.Instance.Send` 前必须修 `GameClient.cs:397` |
