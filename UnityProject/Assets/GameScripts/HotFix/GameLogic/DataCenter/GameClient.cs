@@ -217,6 +217,20 @@ namespace GameLogic
         /// <returns></returns>
         public async FTask<bool> ConnectAsync(string address, int port, bool reconnect = false)
         {
+            // 已有可用连接时直接复用。
+            // 若不在此处返回，下面的 m_connectTask 会被创建但 Scene.Connect 不执行（Session 已存在），
+            // 导致 m_connectTask 无人完成、await 永久挂起，后续所有连接请求都被防重分支拦截。
+            if (Scene.Session != null && !Scene.Session.IsDisposed)
+            {
+                // 目标地址一致才复用；地址不同则先断开，走下面的新建连接流程
+                if (m_lastAddress == address && m_lastPort == port)
+                {
+                    return true;
+                }
+
+                Disconnect();
+            }
+
             // 防止重复多次重连
             if (m_connectTask != null && !m_connectTask.IsCompleted)
             {
@@ -329,6 +343,8 @@ namespace GameLogic
         {
             Status = GameClientStatus.StatusConnected;
             Log.Info("[GameClient] Connected to server success");
+            // 启动心跳：否则服务器 session idle timeout(8000ms) 会在空闲后主动断开连接
+            StartHeartbeat();
             m_connectTask?.SetResult(true);
             m_connectTask = null;
         }

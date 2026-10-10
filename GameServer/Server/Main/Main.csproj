@@ -14,7 +14,7 @@
     <ProjectReference Include="..\Hotfix\Hotfix.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="NLog.config">
+    <None Include="..\Entity\NLog.config" Link="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
