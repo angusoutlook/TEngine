@@ -399,13 +399,15 @@ namespace TEngine
                 if (GUILayout.Button("构建 AssetBundle", abStyle, GUILayout.Height(35)))
                 {
                     SaveSettings();
-                    ExecuteBuild(buildPlayer: false);
+                    // 构建必须脱离 OnGUI 布局栈执行：同步跑数分钟的长构建会破坏 IMGUI 布局栈，
+                    // 恢复时报 "EndLayoutGroup: BeginLayoutGroup must be called first"
+                    EditorApplication.delayCall += () => ExecuteBuild(buildPlayer: false);
                 }
 
                 if (GUILayout.Button("构建 Player", abStyle, GUILayout.Height(35)))
                 {
                     SaveSettings();
-                    ExecuteBuildPlayerOnly();
+                    EditorApplication.delayCall += ExecuteBuildPlayerOnly;
                 }
             }
             EditorGUILayout.EndHorizontal();
@@ -422,7 +424,8 @@ namespace TEngine
             {
                 SaveSettings();
                 _config.BuildPlayer = true;
-                ExecuteBuild(buildPlayer: true);
+                // 同上：脱离 OnGUI 布局栈执行长构建
+                EditorApplication.delayCall += () => ExecuteBuild(buildPlayer: true);
             }
 
             GUILayout.Space(5);
@@ -586,7 +589,7 @@ namespace TEngine
             _config.EncryptionType = (EncryptionType)EditorPrefs.GetInt("TEngine_BP_EncryptionType", 0);
 
             _config.PackageVersion = EditorPrefs.GetString("TEngine_BP_PackageVersion", "");
-            _config.OutputRoot = EditorPrefs.GetString("TEngine_BP_OutputRoot", "./Builds/");
+            _config.OutputRoot = EditorPrefs.GetString("TEngine_BP_OutputRoot_V3", "./Builds/");
 
             _config.MinimalPackage = EditorPrefs.GetBool("TEngine_BP_MinimalPackage", false);
             _config.RetainTags = EditorPrefs.GetString("TEngine_BP_RetainTags", "");

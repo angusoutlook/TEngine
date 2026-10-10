@@ -78,7 +78,7 @@ namespace TEngine
         {
             var config = BuildConfig.CreateDefault();
             config.BuildTarget = BuildTarget.StandaloneWindows64;
-            config.OutputRoot = Application.dataPath + "/../Builds/Windows";
+            config.OutputRoot = Application.dataPath + "/../Builds";
             config.BuildPlayer = true;
             config.PlayerPlatform = BuildTarget.StandaloneWindows64;
             config.PlayerOutputPath = $"{Application.dataPath}/../Build/Windows/Release_Windows.exe";
@@ -90,7 +90,7 @@ namespace TEngine
         {
             var config = BuildConfig.CreateDefault();
             config.BuildTarget = BuildTarget.Android;
-            config.OutputRoot = Application.dataPath + "/../Bundles";
+            config.OutputRoot = Application.dataPath + "/../Builds";
             config.BuildPlayer = true;
             config.PlayerPlatform = BuildTarget.Android;
             config.PlayerOutputPath = $"{Application.dataPath}/../Build/Android/{BuildConfig.GetDefaultPackageVersion()}Android.apk";
@@ -102,7 +102,7 @@ namespace TEngine
         {
             var config = BuildConfig.CreateDefault();
             config.BuildTarget = BuildTarget.iOS;
-            config.OutputRoot = Application.dataPath + "/../Bundles";
+            config.OutputRoot = Application.dataPath + "/../Builds";
             config.BuildPlayer = true;
             config.PlayerPlatform = BuildTarget.iOS;
             config.PlayerOutputPath = $"{Application.dataPath}/../Build/IOS/XCode_Project";
