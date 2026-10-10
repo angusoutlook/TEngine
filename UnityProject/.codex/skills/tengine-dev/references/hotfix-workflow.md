@@ -5,6 +5,10 @@
 本项目已有混淆/加密相关改动，不能覆盖或按旧文档重新生成。
 
 1. 确定改动位于主包还是热更程序集，检查 asmdef 引用和条件编译。
+   主包（进 IL2CPP，改动需重新打整包）：TEngine.Runtime、TEngine.AOT。
+   热更（解释器加载，F8 重打 Bundle 即可下发）：Fantasy.Unity、GameProto、GameLogic、Assembly-CSharp（清单见 HybridCLRSettings.asset）。
+   2026-10 实测：Android 真机需 Player Settings 勾选 Allow downloads over HTTP=Always；
+   GameServer 地址由 `LoginUI.cs` 硬编码（当前 192.168.1.105:20001），服务器监听配置在 `GameServer/Server/Entity/Fantasy.config`。
 2. 核对 `GameApp.Entrance(object[])` 的调用约定；接口事件初始化先于接口使用。
 3. 运行完整解决方案构建，Editor 编译和相关测试。
 4. 涉及新增泛型、反射、裁剪、序列化或原生接口时记录目标平台验证项。

@@ -113,5 +113,8 @@ yoo/
 #Unity 6: il2cpp native build workspace (CMake/ninja for Android)
 .utmp/
 
+#Unity CLI client (per project convention: install once, not tracked in git)
+Tools/
+
 #Unity 编辑器个人窗口布局（个人偏好，不入库，避免污染团队配置）
 /[Uu]ser[Ss]ettings/[Ll]ayouts/

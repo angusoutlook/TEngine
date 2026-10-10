@@ -9,6 +9,8 @@
 | 内存增长 | 加载/释放次数、重复刷新竞争、池引用、Profiler 数据 |
 | 配置失败 | 表注册、字段类型、引用、导出返回码和产物模式 |
 | 真机热更失败 | 主包/热更版本配对、目标平台、AOT/裁剪、完整堆栈 |
+| 真机拉到旧清单/版本回退 | 发布视图 `Builds/ServerRoot/{projectName}/{platform}/DefaultPackage.version` 与最新构建版本是否一致——**ServerRoot 未同步新版本是首要嫌疑**（构建不会自动更新发布视图） |
+| 真机 HTTP 请求被拒（Insecure connection） | Player Settings → Android → Allow downloads over HTTP 是否 Always allowed（打进 APK，改动需重新打包） |
 
 保留失败现场；不要默认删除 Library、persistentDataPath、缓存、包锁或重置用户场景。
 没有连接时静态定位可继续，但 Editor 结论标 blocked。
