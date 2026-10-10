@@ -834,7 +834,9 @@ namespace TEngine.Localization
         public static void CallLocalizeAll()
         {
             LocalizationManager.LocalizeAll(true);
-            HandleUtility.Repaint();
+            // HandleUtility.Repaint() 仅限绘制回调内调用（菜单回调/delayCall 中都会报
+            // "called outside an editor OnGUI"），改用合法的全局场景重绘 API
+            UnityEditor.SceneView.RepaintAll();
         }
     }
 }
