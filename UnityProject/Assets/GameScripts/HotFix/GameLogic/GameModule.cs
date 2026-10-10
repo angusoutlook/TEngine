@@ -11,7 +11,7 @@ public class GameModule
     /// </summary>
     public static RootModule Base
     {
-        get => _base ??= Object.FindObjectOfType<RootModule>();
+        get => _base ??= Object.FindFirstObjectByType<RootModule>();
         private set => _base = value;
     }
 

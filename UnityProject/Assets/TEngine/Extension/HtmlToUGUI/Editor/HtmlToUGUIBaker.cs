@@ -510,7 +510,7 @@ namespace HtmlToUGUI
                 : null;
             if (selectedCanvas != null) return selectedCanvas;
 
-            Canvas[] canvases = FindObjectsOfType<Canvas>(true);
+            Canvas[] canvases = FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             return canvases
                 .OrderByDescending(c => c.isRootCanvas)
                 .ThenBy(c => c.gameObject.scene.IsValid() ? 0 : 1)
@@ -530,7 +530,7 @@ namespace HtmlToUGUI
             scaler.referenceResolution = GetSelectedReferenceResolution();
             scaler.matchWidthOrHeight = 0.5f;
 
-            if (FindObjectOfType<EventSystem>() == null)
+            if (FindFirstObjectByType<EventSystem>() == null)
             {
                 GameObject eventSystemGo = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
                 Undo.RegisterCreatedObjectUndo(eventSystemGo, "Create EventSystem");
@@ -1565,7 +1565,7 @@ namespace HtmlToUGUI
                         txt.color = fontColor;
                         txt.fontSize = fontSize;
                         txt.alignment = ParseTextAlign(nodeData.textAlign);
-                        txt.enableWordWrapping = isMultiLine;
+                        txt.textWrappingMode = isMultiLine ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
                         txt.overflowMode = isMultiLine ? TextOverflowModes.Truncate : TextOverflowModes.Overflow;
                         txt.raycastTarget = false;
                     }
@@ -1598,7 +1598,7 @@ namespace HtmlToUGUI
                         btnTxt.color = fontColor;
                         btnTxt.fontSize = fontSize;
                         btnTxt.alignment = ParseTextAlign(nodeData.textAlign);
-                        btnTxt.enableWordWrapping = false;
+                        btnTxt.textWrappingMode = TextWrappingModes.NoWrap;
                         btnTxt.overflowMode = TextOverflowModes.Overflow;
                         btnTxt.raycastTarget = false;
                     }
@@ -1650,14 +1650,14 @@ namespace HtmlToUGUI
                         phTxt.color = phColor;
                         phTxt.fontSize = fontSize;
                         phTxt.alignment = ParseTextAlign(nodeData.textAlign);
-                        phTxt.enableWordWrapping = false;
+                        phTxt.textWrappingMode = TextWrappingModes.NoWrap;
                         phTxt.raycastTarget = false;
 
                         TextMeshProUGUI inTxt = textGo.AddComponent<TextMeshProUGUI>();
                         inTxt.color = fontColor;
                         inTxt.fontSize = fontSize;
                         inTxt.alignment = ParseTextAlign(nodeData.textAlign);
-                        inTxt.enableWordWrapping = false;
+                        inTxt.textWrappingMode = TextWrappingModes.NoWrap;
                         inTxt.raycastTarget = false;
 
                         inputField.textViewport = textAreaGo.GetComponent<RectTransform>();
@@ -1727,7 +1727,7 @@ namespace HtmlToUGUI
                         tLblTxt.color = fontColor;
                         tLblTxt.fontSize = fontSize;
                         tLblTxt.alignment = TextAlignmentOptions.MidlineLeft;
-                        tLblTxt.enableWordWrapping = false;
+                        tLblTxt.textWrappingMode = TextWrappingModes.NoWrap;
                     }
 
                     toggle.targetGraphic = tBgImg;
@@ -1857,13 +1857,13 @@ namespace HtmlToUGUI
                         dLblTxt.color = fontColor;
                         dLblTxt.fontSize = fontSize;
                         dLblTxt.alignment = TextAlignmentOptions.MidlineLeft;
-                        dLblTxt.enableWordWrapping = false;
+                        dLblTxt.textWrappingMode = TextWrappingModes.NoWrap;
 
                         TextMeshProUGUI itemLblTxt = itemLblGo.AddComponent<TextMeshProUGUI>();
                         itemLblTxt.color = Color.black;
                         itemLblTxt.fontSize = fontSize;
                         itemLblTxt.alignment = TextAlignmentOptions.MidlineLeft;
-                        itemLblTxt.enableWordWrapping = false;
+                        itemLblTxt.textWrappingMode = TextWrappingModes.NoWrap;
 
                         dropdown.targetGraphic = dBgImg;
                         dropdown.template = templateRect;

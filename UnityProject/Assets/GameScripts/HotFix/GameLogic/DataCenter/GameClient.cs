@@ -402,6 +402,12 @@ namespace GameLogic
         /// <param name="message">要发送的消息实例</param>
         /// <param name="rpcID">RPC ID</param>
         /// <param name="routeID">路由 ID，用于消息路由</param>
+        // [ISSUE-001] WARNING: the status check below is WRONG - it passes `rpcID` (an RPC
+        // identifier, usually 0) where IsStatusCanSendMsg expects the message OpCode.
+        // As a result, Send<T> will silently DROP the message (the whitelist never matches),
+        // with no error and no log. Fix BEFORE first business use:
+        //     IsStatusCanSendMsg(message.OpCode())
+        // Tracked in TEngine-Unified-Migration-Plan.md 9.1 (ISSUE-001 / decision D4).
         public void Send<T>(T message, uint rpcID = 0, long routeID = 0) where T : IMessage
         {
             if (!CheckSceneIsValid())
@@ -410,6 +416,7 @@ namespace GameLogic
                 return;
             }
 
+            // [ISSUE-001] BUG: should be message.OpCode(), not rpcID - see warning above.
             if (IsStatusCanSendMsg(rpcID))
             {
                 Scene.Session.Send(message, rpcID, routeID);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -861,7 +862,7 @@ namespace Fantasy
         private static HashSet<string> GetCurrentDefineSymbols(out string rawDefines)
         {
             var group = GetActiveBuildTargetGroup();
-            rawDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            rawDefines = PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group));
             var set = new HashSet<string>(StringComparer.Ordinal);
 
             if (!string.IsNullOrEmpty(rawDefines))
@@ -903,7 +904,7 @@ namespace Fantasy
 
             defines.Add(symbol);
             var group = GetActiveBuildTargetGroup();
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines));
+            PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group), string.Join(";", defines));
             return true;
         }
 
@@ -921,7 +922,7 @@ namespace Fantasy
             }
 
             var group = GetActiveBuildTargetGroup();
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines));
+            PlayerSettings.SetScriptingDefineSymbols(NamedBuildTarget.FromBuildTargetGroup(group), string.Join(";", defines));
             return true;
         }
 

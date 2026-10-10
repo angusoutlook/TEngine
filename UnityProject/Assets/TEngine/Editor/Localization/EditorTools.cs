@@ -430,7 +430,7 @@ namespace TEngine.Localization
 
 		public static IEnumerable<GameObject> SceneRoots()
 		{
-#if UNITY_6000_5_OR_NEWER
+#if UNITY_6000_0_OR_NEWER
 			for (int i = 0; i < SceneManager.sceneCount; i++)
 			{
 				var scene = SceneManager.GetSceneAt(i);

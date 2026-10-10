@@ -26,12 +26,12 @@ namespace GameLogic
 
 		private partial void OnClickRegisterBtn()
 		{
-			DataCenterSys.Instance.Register("127.0.0.1", 20001, m_inputAccount.text, m_inputPassword.text).Coroutine();
+			DataCenterSys.Instance.Register("192.168.1.105", 20001, m_inputAccount.text, m_inputPassword.text).Coroutine();
 		}
 
 		private partial void OnClickLoginBtn()
 		{
-			DataCenterSys.Instance.Login("127.0.0.1", 20001, m_inputAccount.text, m_inputPassword.text).Coroutine();
+			DataCenterSys.Instance.Login("192.168.1.105", 20001, m_inputAccount.text, m_inputPassword.text).Coroutine();
 		}
 
 		#endregion
