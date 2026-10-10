@@ -1,0 +1,5 @@
+{
+    "name": "SuperScrollView.Editor",
+    "references": [ "GameLogic" ],
+    "includePlatforms": [ "Editor" ]
+}
