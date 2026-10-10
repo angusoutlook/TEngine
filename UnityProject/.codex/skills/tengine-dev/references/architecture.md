@@ -4,17 +4,16 @@
 |---|---|
 | `Assets/TEngine/Runtime` | TEngine.Runtime 框架 |
 | `Assets/TEngine/Editor` | TEngine.Editor 编辑器工具 |
-| `Assets/TEngine.AOT` | **TEngine.AOT 主包启动器**（`GameEntry.cs`、`Procedure/`）——2026-10 合并后结构（原 `Assets/Launcher` 已随 Fantasy 合并删除） |
-| `Assets/GameScripts/HotFix/Fantasy.Unity` | **Fantasy.Unity**，热更主程序集（框架集成与网络封装，`FANTASY_UNITY` 门控） |
+| `Assets/Launcher` | 主包启动器 |
+| `Assets/GameScripts/GameEntry.cs`、`Procedure` | 主包，按最近 asmdef/预定义程序集确认 |
 | `Assets/GameScripts/HotFix/GameProto` | GameProto，协议和配置 |
 | `Assets/GameScripts/HotFix/GameLogic` | GameLogic，业务和 UI |
 | `Assets/TEngine/Extension/HtmlToUGUI` | 共用配置及 Editor 烘焙工具 |
 
-主包（AOT，进 IL2CPP 构建）：TEngine.Runtime、TEngine.AOT。热更（解释器加载，不进主包）：Fantasy.Unity、GameProto、GameLogic、Assembly-CSharp。
-不要发明 `GameScripts/Main` 或 `GameScripts.Main`。程序集事实来自 asmdef，而不是目录名"看起来像"。
-GameLogic 可依赖 GameProto/Fantasy.Unity/TEngine.Runtime；底层与 GameProto 不反向引用 GameLogic。
+不要发明 `GameScripts/Main` 或 `GameScripts.Main`。程序集事实来自 asmdef，而不是目录名“看起来像”。
+GameLogic 可依赖 GameProto/TEngine.Runtime；底层与 GameProto 不反向引用 GameLogic。
 
-入口：[GameEntry](../../../../Assets/TEngine.AOT/GameEntry.cs)、
+入口：[GameEntry](../../../../Assets/GameScripts/GameEntry.cs)、
 [GameApp](../../../../Assets/GameScripts/HotFix/GameLogic/GameApp.cs)、
 [GameModule](../../../../Assets/GameScripts/HotFix/GameLogic/GameModule.cs)。
 GameApp 的热更入口是 `Entrance(object[] objects)`，首项为程序集列表。
